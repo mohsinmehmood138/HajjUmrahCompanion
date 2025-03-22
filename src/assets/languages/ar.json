@@ -1,0 +1,25 @@
+{
+  "home": {
+    "heading": "دليل العمرة"
+  },
+  "home_card_section": {
+    "card_one_heading": "التحضير المسبق للعمرة",
+    "card_one_subheading": "احزم أمتعتك، خطط، واستعد لرحلة سلسة.",
+    "card_two_heading": "دليل الحج خطوة بخطوة",
+    "card_two_subheading": "اتبع كل خطوة بثقة.",
+    "card_three_heading": "قائمة مراجعة الحج والعمرة",
+    "card_three_subheading": "لا تنسَ أي خطوة أو عنصر أساسي.",
+    "card_four_heading": "دليل الصحة والسلامة",
+    "card_four_subheading": "حافظ على صحتك طوال رحلتك."
+  },
+
+  "dua": {
+    "heading": "الدعاء"
+  },
+
+  "setting": {
+    "language": "اللغة",
+    "location": "الموقع",
+    "logout": "تسجيل الخروج"
+  }
+}

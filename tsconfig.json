@@ -1,3 +1,22 @@
 {
-  "extends": "@react-native/typescript-config/tsconfig.json"
+  "extends": "@react-native/typescript-config/tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react",
+    "baseUrl": ".",
+    "paths": {
+      "@src/*": ["src/*"],
+      "@assets/*": ["src/assets/*"],
+      "@navigation/*": ["src/navigation/*"],
+      "@navStacks/*": ["src/navigation/Stacks/*"],
+      "@redux/*": ["src/redux/*"],
+      "@authScreens/*": ["src/screens/Auth/*"],
+      "@appScreens/*": ["src/screens/App/*"],
+      "@appIntroScreens/*": ["src/screens/AppIntro/*"],
+      "@components/*": ["src/components/*"],
+      "@shared/*": ["src/shared/*"],
+      "@appAssets/*": ["src/shared/assets/*"],
+      "@theme/*": ["src/shared/theme/*"],
+      "@utils/*": ["src/shared/utils/*"]
+    }
+  }
 }

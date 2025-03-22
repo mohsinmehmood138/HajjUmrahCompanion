@@ -1,0 +1,69 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/CerebriSansPro-Bold.ttf",
+      "sha1": "4c12406af58a0d7165050fec04edd806e785361b"
+    },
+    {
+      "path": "src/assets/fonts/CerebriSansPro-ExtraBold.ttf",
+      "sha1": "7067591e188212466ba391bbeec321cccea3f311"
+    },
+    {
+      "path": "src/assets/fonts/CerebriSansPro-ExtraLight.ttf",
+      "sha1": "40a8a418dfc02df592481ec8c461b00d7fa139f6"
+    },
+    {
+      "path": "src/assets/fonts/CerebriSansPro-Heavy.ttf",
+      "sha1": "68236bfe15186595bc02a5b10a24f657c7a66f85"
+    },
+    {
+      "path": "src/assets/fonts/CerebriSansPro-Light.ttf",
+      "sha1": "17aea883964fd79ddec2459be2673d30e04b2d59"
+    },
+    {
+      "path": "src/assets/fonts/CerebriSansPro-Medium.ttf",
+      "sha1": "c23556b89d6df4a9fe96ddd0230fb37c65e57d2a"
+    },
+    {
+      "path": "src/assets/fonts/CerebriSansPro-Regular.ttf",
+      "sha1": "86f0648894dd9a9f6370e32570cbbf9328838410"
+    },
+    {
+      "path": "src/assets/fonts/CerebriSansPro-SemiBold.ttf",
+      "sha1": "21d2c3b1f49fe4b25b1ea22f47710ffde7ec9769"
+    },
+    {
+      "path": "src/assets/fonts/CerebriSansPro-Thin.ttf",
+      "sha1": "188cff9b7f84276e9e7f0f1ed1cb4132beeb25c3"
+    },
+    {
+      "path": "src/assets/fonts/PlayfairDisplay-Black.ttf",
+      "sha1": "8447710fac88b58e7f3b6f034ceda7eb3a036f4c"
+    },
+    {
+      "path": "src/assets/fonts/PlayfairDisplay-Bold.ttf",
+      "sha1": "fb74d7e889a2c24dc08d5b931c620d47e607d11a"
+    },
+    {
+      "path": "src/assets/fonts/PlayfairDisplay-ExtraBold.ttf",
+      "sha1": "a65d3cc7e11169ae1bfc88db81005077afd020d2"
+    },
+    {
+      "path": "src/assets/fonts/PlayfairDisplay-Regular.ttf",
+      "sha1": "96a2e660869a872971935d18105d64eadd693ddb"
+    },
+    {
+      "path": "src/assets/fonts/PlayfairDisplay-SemiBold.ttf",
+      "sha1": "b50e2c15ddb338b15f08df6c2c37ce35f698148f"
+    },
+    {
+      "path": "src/assets/fonts/PlayfairDisplay_Bold.ttf",
+      "sha1": "fb74d7e889a2c24dc08d5b931c620d47e607d11a"
+    },
+    {
+      "path": "src/assets/fonts/PlayfairDisplay_Medium.ttf",
+      "sha1": "8bf13110d20940f886ae02a07ec6068f4028740d"
+    }
+  ]
+}

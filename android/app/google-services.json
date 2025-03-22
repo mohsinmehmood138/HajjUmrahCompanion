@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "285964893267",
+    "project_id": "hajj-and-umran-companion",
+    "storage_bucket": "hajj-and-umran-companion.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285964893267:android:c89b964a510873cd231aa6",
+        "android_client_info": {
+          "package_name": "com.hajjumrahcompanion"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsnwnGfQQy2ZlIHIoXgiVfV46cjCTmz7U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

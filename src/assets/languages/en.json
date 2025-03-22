@@ -1,0 +1,25 @@
+{
+  "home": {
+    "heading": "The Umrah Guide"
+  },
+  "home_card_section": {
+    "card_one_heading": " Pre-Umrah Preparation",
+    "card_one_subheading": "Pack, plan, and prepare for a smooth journey. ",
+    "card_two_heading": "Step-by-Step Hajj Guide",
+    "card_two_subheading": "Follow each step with confidence.",
+    "card_three_heading": "Hajj & Umrah Checklist",
+    "card_three_subheading": "Never forget an essential step or item.",
+    "card_four_heading": "Health & Safety Guide",
+    "card_four_subheading": "Stay healthy throughout your journey."
+  },
+
+  "dua": {
+    "heading": "Dua"
+  },
+
+  "setting": {
+    "language": "language",
+    "location": "location",
+    "logout": "logout"
+  }
+}

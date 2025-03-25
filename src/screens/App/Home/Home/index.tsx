@@ -1,21 +1,39 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
   Image,
   FlatList,
   ScrollView,
-  I18nManager,
   ImageBackground,
   TouchableOpacity,
 } from 'react-native';
-import {t} from 'i18next';
+import {useDispatch, useSelector} from 'react-redux';
 import styles from './styles';
+import TranslateText from '@src/hooks/useTranslate';
 import {appImages, appSVG} from '@src/shared/assets';
 import {Routes, UMRAH_DATA} from '@src/shared/exporter';
+import {AppLoader} from '@src/components/primitive/AppLoader';
+import {setTranslationLoading} from '@src/redux/app/appSlice';
 
 const Home = ({navigation}: any) => {
-  console.log(I18nManager.isRTL, 'isRTL');
+  const dispatch = useDispatch();
+  const [allTextsLoaded, setAllTextsLoaded] = useState(false);
+  const {translationLoading, isRTL} = useSelector((state: any) => state.app);
+
+  console.log(isRTL, 'isRTL', translationLoading);
+
+  useEffect(() => {
+    if (translationLoading) {
+      const timer = setTimeout(() => {
+        dispatch(setTranslationLoading(false));
+        setAllTextsLoaded(true);
+      }, 1500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [translationLoading]);
+
   const renderItem = ({item}: any) => {
     return (
       <TouchableOpacity
@@ -32,22 +50,27 @@ const Home = ({navigation}: any) => {
           <View
             style={[
               styles.overLapView,
-              {flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row'},
+              {
+                flexDirection: isRTL ? 'row-reverse' : 'row',
+              },
             ]}>
-            <View
-              style={{
-                alignItems: I18nManager.isRTL ? 'flex-end' : 'flex-start',
-              }}>
-              <Text style={styles.cardTextStyle}>
-                {t(`home_card_section.${item?.heading}`)}
-              </Text>
-              <Text style={styles.desTextStyle}>
-                {t(`home_card_section.${item?.subheading}`)}
-              </Text>
+            <View>
+              <TranslateText
+                style={[
+                  styles.cardTextStyle,
+                  {
+                    alignSelf: isRTL ? 'flex-end' : 'flex-start',
+                  },
+                ]}>
+                {item?.heading}
+              </TranslateText>
+              <TranslateText style={[styles.desTextStyle]}>
+                {item?.subheading}
+              </TranslateText>
             </View>
             <View
               style={{
-                transform: [{rotate: I18nManager?.isRTL ? '180deg' : '0deg'}],
+                transform: isRTL ? [{rotateY: '180deg'}] : [{rotateY: '0deg'}],
               }}>
               {appSVG.ChevronRight}
             </View>
@@ -56,18 +79,26 @@ const Home = ({navigation}: any) => {
       </TouchableOpacity>
     );
   };
+
+  if (translationLoading && !allTextsLoaded) {
+    return <AppLoader />;
+  }
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
         <Image source={appImages.home} style={styles.imageStyle} />
         <View style={styles.bodyContainer}>
-          <Text
+          <TranslateText
             style={[
               styles.homeTextStyle,
-              {alignSelf: I18nManager?.isRTL ? 'flex-end' : 'flex-start'},
+              {
+                alignSelf: isRTL ? 'flex-end' : 'flex-start',
+              },
             ]}>
-            {t('home.heading')}
-          </Text>
+            The Umrah Guide
+          </TranslateText>
+
           <FlatList
             data={UMRAH_DATA}
             renderItem={renderItem}
@@ -79,4 +110,5 @@ const Home = ({navigation}: any) => {
     </ScrollView>
   );
 };
+
 export default Home;

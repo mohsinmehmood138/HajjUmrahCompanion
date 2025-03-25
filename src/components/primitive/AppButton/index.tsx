@@ -10,7 +10,7 @@ import {
 
 interface AppButtonProps {
   icon?: any;
-  title: string;
+  title: any;
   textStyle?: any;
   isEmpty?: boolean;
   buttonStyle?: any;

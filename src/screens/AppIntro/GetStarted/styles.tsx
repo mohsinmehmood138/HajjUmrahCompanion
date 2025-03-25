@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.4)',
   },
   languageContainer: {
-    marginTop: WP('8'),
+    marginTop: WP('20'),
     marginRight: WP('5'),
     alignSelf: 'flex-end',
   },

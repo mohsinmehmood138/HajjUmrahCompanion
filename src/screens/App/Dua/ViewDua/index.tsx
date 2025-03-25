@@ -9,12 +9,15 @@ import {
 } from 'react-native';
 import styles from './styles';
 import {AppHeader} from '@src/shared/components';
+import TranslateText from '@src/hooks/useTranslate';
 import {appImages, appSVG} from '@src/shared/assets';
 import {MainWrapper} from '@src/components/primitive/MainWrapper';
+import {useSelector} from 'react-redux';
+import {WP} from '@src/shared/exporter';
 
 const ViewDua = ({route}: any) => {
   const {dua} = route.params;
-  console.log('dua', dua);
+  const {isRTL} = useSelector((state: any) => state.app);
 
   const handleShare = async () => {
     try {
@@ -41,16 +44,41 @@ const ViewDua = ({route}: any) => {
 
   return (
     <MainWrapper>
-      <AppHeader title={dua?.title} />
+      <AppHeader title={<TranslateText>{dua?.title}</TranslateText>} />
       <ScrollView style={styles.container}>
         <View style={styles.arabicContainer}>
           <Text style={styles.arabicText}>{dua.arabic}</Text>
         </View>
         <Text style={styles.transliteration}>{dua.transliteration}</Text>
-        <Text style={styles.translation}>{dua.translation}</Text>
-        <Text style={styles.sectionTitle}>{dua.description}</Text>
-        <View style={styles.infoContainer}>
-          <Text style={styles.infoText}>{dua.additionalInfo}</Text>
+        <TranslateText
+          style={[
+            styles.translation,
+            {
+              textAlign: isRTL ? 'right' : 'left',
+            },
+          ]}>
+          {dua.translation}
+        </TranslateText>
+        <TranslateText
+          style={[
+            styles.sectionTitle,
+            {
+              textAlign: isRTL ? 'right' : 'left',
+            },
+          ]}>
+          {dua.description}
+        </TranslateText>
+        <View style={isRTL ? styles.borderRight : styles.borderLeft}>
+          <TranslateText
+            style={[
+              styles.infoText,
+              {
+                textAlign: isRTL ? 'right' : 'left',
+                marginRight: isRTL ? WP('4') : 0,
+              },
+            ]}>
+            {dua.additionalInfo}
+          </TranslateText>
         </View>
       </ScrollView>
       <View style={styles.actionContainer}>

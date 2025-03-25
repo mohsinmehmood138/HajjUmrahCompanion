@@ -15,6 +15,7 @@ import {
   AppFontSize,
   AppFontFamily,
 } from '@shared/exporter';
+import {useSelector} from 'react-redux';
 
 interface AppInputProps extends TextInputProps {
   value?: string;
@@ -54,8 +55,16 @@ const AppInput: React.FC<AppInputProps> = ({
   autoCapitalize = 'none',
   textAlignVertical = 'auto',
 }) => {
+  const {isRTL} = useSelector((state: any) => state.app);
   return (
-    <View style={[inputContainerView(), inputContainerStyle]}>
+    <View
+      style={[
+        inputContainerView(),
+        inputContainerStyle,
+        {
+          flexDirection: isRTL ? 'row-reverse' : 'row',
+        },
+      ]}>
       {leftIcon}
       <TextInput
         placeholder={placeholder}
@@ -63,7 +72,13 @@ const AppInput: React.FC<AppInputProps> = ({
         editable={editable}
         placeholderTextColor={AppColor.Neutrals.Gray1}
         onChangeText={onChangeText}
-        style={[AppInputStyle(), inputStyle]}
+        style={[
+          AppInputStyle(),
+          inputStyle,
+          {
+            textAlign: isRTL ? 'right' : 'left',
+          },
+        ]}
         maxLength={maxLength}
         multiline={multiline}
         onEndEditing={onEndEditing}

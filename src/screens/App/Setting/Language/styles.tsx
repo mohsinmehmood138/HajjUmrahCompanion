@@ -1,11 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {
-  WP,
-  AppColor,
-  AppFontSize,
-  AppFontFamily,
-  HP,
-} from '@src/shared/exporter';
+import {WP, AppColor, AppFontSize, AppFontFamily} from '@src/shared/exporter';
 
 const styles = StyleSheet.create({
   container: {
@@ -27,6 +21,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: WP('8'),
     flexDirection: 'row',
+    paddingHorizontal: WP('3'),
     justifyContent: 'space-between',
   },
   languageStyle: {
@@ -47,6 +42,16 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
+  },
+  loadingContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    fontWeight: '500',
   },
 });
 

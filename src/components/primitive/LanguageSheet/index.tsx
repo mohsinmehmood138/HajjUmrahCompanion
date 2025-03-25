@@ -12,7 +12,7 @@ import {
   AppFontFamily,
   COUNTRY_LANGUAGES,
 } from '../../../shared/exporter';
-import {setSelectedLanguage} from '@src/redux/app/appSlice';
+import {setIsRTL, setSelectedLanguage} from '@src/redux/app/appSlice';
 
 interface BottomSheetProps {
   refRBSheet: any;
@@ -53,6 +53,7 @@ const AppBottomSheet: React.FC<BottomSheetProps> = ({
     const selectedLanguage = updatedLanguages.find(lang => lang.selected);
     setLanguages(updatedLanguages);
     dispatch(setSelectedLanguage(selectedLanguage));
+    dispatch(setIsRTL(selectedLanguage?.isRTL));
     i18next.changeLanguage(selectedLanguage?.code);
   };
 
@@ -70,7 +71,7 @@ const AppBottomSheet: React.FC<BottomSheetProps> = ({
           borderTopRightRadius: WP('4'),
           backgroundColor: AppColor.Neutrals.White,
           height: 'auto',
-          minHeight: HP('45'),
+          minHeight: HP('60'),
           maxHeight: HP('80'),
         },
         draggableIcon: {

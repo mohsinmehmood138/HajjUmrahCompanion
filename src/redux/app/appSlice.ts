@@ -7,11 +7,13 @@ const appSlice = createSlice({
   initialState: {
     duaData: DUA_DATA,
     isWalkthrough: false,
+    translationLoading: false,
     pre_umrah: UMRAH_CHECKLIST_DATA,
     hajj_guide: UMRAH_CHECKLIST_DATA,
     safety_guide: UMRAH_CHECKLIST_DATA,
     umrah_checklist: UMRAH_CHECKLIST_DATA,
     selectedLanguage: {id: '1', name: 'English', code: 'en', selected: true},
+    isRTL: false,
   },
   reducers: {
     setIsWalkthrough: state => {
@@ -35,7 +37,12 @@ const appSlice = createSlice({
     setSafetyGuide: (state, action) => {
       state.safety_guide = action.payload;
     },
-
+    setTranslationLoading: (state, action) => {
+      state.translationLoading = action.payload;
+    },
+    setIsRTL: (state, action) => {
+      state.isRTL = action.payload;
+    },
     logOut: state => {
       state.isWalkthrough = false;
     },
@@ -51,6 +58,8 @@ export const {
   setIsWalkthrough,
   setUmrahChecklist,
   setSelectedLanguage,
+  setTranslationLoading,
+  setIsRTL,
 } = appSlice.actions;
 
 export default appSlice.reducer;

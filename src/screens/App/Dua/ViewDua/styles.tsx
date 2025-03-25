@@ -39,11 +39,17 @@ const styles = StyleSheet.create({
     fontSize: AppFontSize.FONT_SIZE_18,
     fontFamily: AppFontFamily.CerebriSansPro_Medium,
   },
-  infoContainer: {
+  borderLeft: {
     borderLeftWidth: 3,
     marginBottom: WP('5'),
     borderLeftColor: AppColor.Primary.DarkBrown,
   },
+  borderRight: {
+    borderRightWidth: 3,
+    marginBottom: WP('5'),
+    borderRightColor: AppColor.Primary.DarkBrown,
+  },
+
   infoText: {
     lineHeight: 24,
     marginLeft: WP('4'),

@@ -4,17 +4,17 @@ import {
   Text,
   Image,
   FlatList,
-  I18nManager,
   ImageBackground,
   TouchableOpacity,
 } from 'react-native';
 import styles from './styles';
 import {db} from '@src/config/firebaseConfig';
 import {
-  setHajjGuide,
   setPreUmrah,
+  setHajjGuide,
   setSafetyGuide,
   setUmrahChecklist,
+  setTranslationLoading,
 } from '@src/redux/app/appSlice';
 import {appImages, appSVG} from '@src/shared/assets';
 import {useDispatch, useSelector} from 'react-redux';
@@ -22,20 +22,33 @@ import {collection, onSnapshot, orderBy, query} from '@firebase/firestore';
 import {
   HP,
   WP,
+  isIOS,
   PRE_UMRAH,
   HAJJ_GUIDE,
   SAFETY_GUIDE,
   UMRAH_CHECKLIST,
 } from '@src/shared/exporter';
-import {t} from 'i18next';
+import TranslateText from '@src/hooks/useTranslate';
+import {AppLoader} from '@src/components/primitive/AppLoader';
 
 const ViewHome = ({navigation, route}: any) => {
   const {item} = route?.params;
-  console.log('item', item?.apiKey);
-
   const dispatch = useDispatch();
+  const [allTextsLoaded, setAllTextsLoaded] = useState(false);
+  const {translationLoading, isRTL} = useSelector((state: any) => state.app);
   const data = useSelector((state: any) => state?.app[`${item?.apiKey}`]);
   const [checklistData, setChecklistData] = useState(data);
+
+  useEffect(() => {
+    if (translationLoading) {
+      const timer = setTimeout(() => {
+        dispatch(setTranslationLoading(false));
+        setAllTextsLoaded(true);
+      }, 1500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [translationLoading]);
 
   useEffect(() => {
     const duaCollection = collection(db, item?.apiKey);
@@ -112,26 +125,34 @@ const ViewHome = ({navigation, route}: any) => {
       activeOpacity={0.8}
       style={[
         styles.checklistItem,
-        {flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row'},
+        {
+          flexDirection: isRTL ? 'row-reverse' : 'row',
+          paddingHorizontal: WP('4'),
+        },
       ]}
       onPress={() => toggleCheckbox(section.id, item.id)}>
-      <View style={styles.checkBoxItem}>
+      <View style={[styles.checkBoxItem]}>
         {item.selected ? appSVG.SelectedCheckBox : appSVG.CheckBox}
       </View>
-
       <View
         style={[
           styles.itemTextContainer,
-          {alignItems: I18nManager.isRTL ? 'flex-end' : 'flex-start'},
+          {
+            alignItems: isRTL ? 'flex-end' : 'flex-start',
+            marginRight: isRTL ? WP('4') : 0,
+            marginLeft: isRTL ? 0 : WP('4'),
+          },
         ]}>
-        <Text style={styles.itemText}>{item.text}</Text>
-        <Text
+        <TranslateText style={styles.itemText}>{item.text}</TranslateText>
+        <TranslateText
           style={[
             styles.itemDescription,
-            {textAlign: I18nManager.isRTL ? 'right' : 'left'},
+            {
+              textAlign: isRTL ? 'right' : 'left',
+            },
           ]}>
           {item.description}
-        </Text>
+        </TranslateText>
       </View>
     </TouchableOpacity>
   );
@@ -142,25 +163,33 @@ const ViewHome = ({navigation, route}: any) => {
         activeOpacity={0.8}
         style={[
           styles.listContainer,
-          {flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row'},
+          {
+            flexDirection: isRTL ? 'row-reverse' : 'row',
+          },
         ]}
         onPress={() => toggleSection(section.id)}>
         <View
           style={[
             styles.textContainer,
-            {flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row'},
+            {
+              flexDirection: isRTL ? 'row-reverse' : 'row',
+              justifyContent: isRTL ? 'flex-end' : 'flex-start',
+            },
           ]}>
           <View style={[styles.listCountingStyle]}>
             <Text>{section.id}</Text>
           </View>
-          <Text
+          <TranslateText
             style={[
               styles.listTextStyle,
-              {marginRight: I18nManager.isRTL ? WP('4') : 0},
+              {
+                marginRight: isRTL ? WP('4') : 0,
+              },
             ]}>
             {section.label}
-          </Text>
+          </TranslateText>
         </View>
+
         {section.showValue ? appSVG.ChevronUp : appSVG.ChevronDown}
       </TouchableOpacity>
 
@@ -178,6 +207,10 @@ const ViewHome = ({navigation, route}: any) => {
     </View>
   );
 
+  if (translationLoading) {
+    return <AppLoader />;
+  }
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -186,29 +219,38 @@ const ViewHome = ({navigation, route}: any) => {
         style={[
           styles.viewImageStyle,
           {
-            minHeight: HP('22'),
-            maxHeight: I18nManager.isRTL ? HP('25') : WP('23'),
+            minHeight: HP('20'),
+            maxHeight: HP('22'),
           },
         ]}>
         <View
           style={[
             styles.overLapImage,
-            {alignItems: I18nManager.isRTL ? 'flex-end' : 'flex-start'},
+            {
+              alignItems: isRTL ? 'flex-end' : 'flex-start',
+              paddingRight: isRTL ? WP('5') : 0,
+            },
           ]}>
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => navigation.goBack()}
             style={{
-              transform: [{rotate: I18nManager.isRTL ? '180deg' : '0deg'}],
-            }}>
+              transform: isRTL ? [{rotate: '180deg'}] : undefined,
+            }}
+            onPress={() => navigation.goBack()}>
             {appSVG.GoBack}
           </TouchableOpacity>
-          <Text style={styles.headingStyle}>
-            {t(`home_card_section.${item?.heading}`)}
-          </Text>
-          <Text style={styles.subHeadingStyle}>
-            {t(`home_card_section.${item?.subheading}`)}
-          </Text>
+          <TranslateText
+            style={[
+              styles.headingStyle,
+              {
+                marginTop: isRTL ? (isIOS() ? 0 : WP('4')) : WP('5'),
+              },
+            ]}>
+            {item?.heading}
+          </TranslateText>
+          <TranslateText style={styles.subHeadingStyle}>
+            {item?.subheading}
+          </TranslateText>
         </View>
       </ImageBackground>
       <View style={styles.bodyContainer}>

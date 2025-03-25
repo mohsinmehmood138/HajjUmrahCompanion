@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  I18nManager,
-  TouchableOpacity,
-} from 'react-native';
+import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import {
@@ -16,9 +10,11 @@ import {
   AppFontSize,
   AppFontFamily,
 } from '@shared/exporter';
+import {useSelector} from 'react-redux';
+import TranslateText from '@src/hooks/useTranslate';
 
 interface AppHeaderProps {
-  title?: string;
+  title?: any;
   leftIcon?: boolean;
   rightIcon?: boolean;
   shadowStyle?: boolean;
@@ -34,6 +30,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
   onPressView = () => {},
 }) => {
   const navigation: any = useNavigation();
+  const {isRTL} = useSelector((state: any) => state.app);
 
   return (
     <>
@@ -42,18 +39,20 @@ const AppHeader: React.FC<AppHeaderProps> = ({
         <View
           style={[
             styles.container,
-            {flexDirection: I18nManager?.isRTL ? 'row-reverse' : 'row'},
+            {
+              flexDirection: isRTL ? 'row-reverse' : 'row',
+            },
           ]}>
           <TouchableOpacity
             activeOpacity={0.7}
             style={[
               styles.leftIconContainer,
-              {transform: [{rotate: I18nManager?.isRTL ? '180deg' : '0deg'}]},
+              {transform: [{rotate: isRTL ? '180deg' : '0deg'}]},
             ]}
             onPress={() => (onPressBack ? onPressBack() : navigation.goBack())}>
             {leftIcon ? appSVG.BackIcon : <View style={styles.emptyView} />}
           </TouchableOpacity>
-          <Text style={styles.textStyle}>{title}</Text>
+          <TranslateText style={styles.textStyle}>{title}</TranslateText>
           {rightIcon ? (
             <TouchableOpacity
               activeOpacity={0.7}
@@ -76,7 +75,7 @@ const styles = StyleSheet.create({
     height: WP('29'),
     flexDirection: 'row',
     alignItems: 'flex-end',
-    paddingHorizontal: WP('3'),
+    paddingHorizontal: WP('5'),
     justifyContent: 'space-between',
     paddingBottom: isIOS() ? WP('4') : WP('6'),
   },

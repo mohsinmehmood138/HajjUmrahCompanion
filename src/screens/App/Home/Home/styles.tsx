@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: WP('4'),
   },
   homeTextStyle: {
-    fontWeight: '500',
+    alignSelf: 'flex-start',
     color: AppColor.Neutrals.Black,
     fontSize: AppFontSize.FONT_SIZE_18,
     fontFamily: AppFontFamily.CerebriSansPro_SemiBold,
@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
     borderRadius: WP('3'),
     overflow: 'hidden',
   },
-
   flatListBackground: {
     height: WP('28'),
     borderRadius: WP('3'),
@@ -45,6 +44,7 @@ const styles = StyleSheet.create({
     fontFamily: AppFontFamily.CerebriSansPro_SemiBold,
   },
   desTextStyle: {
+    alignSelf: 'flex-end',
     color: AppColor.Neutrals.White,
     fontSize: AppFontSize.FONT_SIZE_14,
     fontFamily: AppFontFamily.CerebriSansPro_Regular,

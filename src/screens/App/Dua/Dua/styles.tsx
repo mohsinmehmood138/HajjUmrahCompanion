@@ -28,6 +28,7 @@ export const styles = StyleSheet.create({
   },
   textContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   headingStyle: {
     marginLeft: WP('3'),

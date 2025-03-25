@@ -1,26 +1,22 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Text,
-  View,
-  Image,
-  FlatList,
-  I18nManager,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Image, FlatList, TouchableOpacity, Text} from 'react-native';
 import i18next from 'i18next';
 import RNRestart from 'react-native-restart';
 import styles from './styles';
 import {AppHeader} from '@src/shared/components';
+import {setIsRTL} from '@src/redux/app/appSlice';
 import {appImages, appSVG} from '@src/shared/assets';
 import {useDispatch, useSelector} from 'react-redux';
 import {COUNTRY_LANGUAGES} from '@src/shared/exporter';
 import {setSelectedLanguage} from '@src/redux/app/appSlice';
 import {AppButton} from '@src/components/primitive/AppButton';
+import {setTranslationLoading} from '@src/redux/app/appSlice';
 import {MainWrapper} from '@src/components/primitive/MainWrapper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Language = () => {
   const dispatch = useDispatch();
-  const {selectedLanguage} = useSelector((state: any) => state.app);
+  const {selectedLanguage, isRTL} = useSelector((state: any) => state.app);
   const [languages, setLanguages] = useState(COUNTRY_LANGUAGES);
 
   useEffect(() => {
@@ -31,8 +27,8 @@ const Language = () => {
       ...lang,
       selected: lang?.id === selectLanguage?.id,
     }));
+
     setLanguages(updatedLanguages);
-    console.log(languages, 'languages');
   }, []);
 
   const handleLanguageSelect = (id: any) => {
@@ -40,24 +36,24 @@ const Language = () => {
       ...lang,
       selected: lang.id === id,
     }));
+
     setLanguages(updatedLanguages);
   };
 
   const handleChangeLanguage = async () => {
+    console.log('selectedLang', selectedLanguage);
     try {
-      const selectedLanguage: any = languages.find(
-        lang => lang.selected === true,
-      );
-      const selectedLanguageCode = languages.find(
-        lang => lang.selected === true,
-      )?.code;
-      dispatch(setSelectedLanguage(selectedLanguage));
-      i18next.changeLanguage(selectedLanguageCode);
-      I18nManager.forceRTL(selectedLanguage?.isRTL);
+      const selectedLang = languages.find(lang => lang.selected === true);
+      dispatch(setTranslationLoading(true));
+      dispatch(setIsRTL(selectedLang?.isRTL));
+      dispatch(setSelectedLanguage(selectedLang));
+      await AsyncStorage.setItem('needsTranslation', 'true');
+
+      i18next.changeLanguage(selectedLang?.code);
 
       setTimeout(() => {
         RNRestart.Restart();
-      }, 500);
+      }, 1000);
     } catch (error) {
       console.error('Error changing language', error);
     }
@@ -68,7 +64,7 @@ const Language = () => {
       style={[
         styles.listItem,
         {
-          flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+          flexDirection: isRTL ? 'row-reverse' : 'row',
         },
       ]}
       onPress={() => handleLanguageSelect(item.id)}>
@@ -79,7 +75,7 @@ const Language = () => {
 
   return (
     <MainWrapper edges={['bottom', 'left', 'right']}>
-      <AppHeader title="Language" />
+      <AppHeader title={<Text>Language</Text>} />
       <View style={styles.container}>
         <FlatList
           data={languages}

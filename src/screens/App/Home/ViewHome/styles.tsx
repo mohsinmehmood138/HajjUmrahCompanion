@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
   },
   headingStyle: {
     fontWeight: '500',
-    marginTop: WP('5'),
     color: AppColor.Neutrals.White,
     fontSize: AppFontSize.FONT_SIZE_16,
     fontFamily: AppFontFamily.CerebriSansPro_SemiBold,
@@ -49,9 +48,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: WP('3'),
   },
   listContainer: {
-    marginTop: WP('5'),
     borderRadius: 12,
+    marginTop: WP('5'),
+    elevation: WP('3'),
     alignItems: 'center',
+    flexDirection: 'row',
     paddingVertical: WP('4'),
     paddingHorizontal: WP('4'),
     justifyContent: 'space-between',
@@ -60,10 +61,8 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 0, height: 4},
     shadowOpacity: 0.2,
     shadowRadius: 6,
-    elevation: WP('3'),
   },
   textContainer: {
-    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
@@ -87,13 +86,11 @@ const styles = StyleSheet.create({
   },
 
   checklistItem: {
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
     marginTop: WP('7'),
   },
-
   itemTextContainer: {
     width: '91%',
+    alignItems: 'flex-start',
   },
   checkBoxItem: {
     position: 'relative',
@@ -106,6 +103,7 @@ const styles = StyleSheet.create({
     fontFamily: AppFontFamily.CerebriSansPro_Regular,
   },
   itemDescription: {
+    textAlign: 'left',
     color: AppColor.Neutrals.Gray1,
     fontSize: AppFontSize.FONT_SIZE_14,
     fontFamily: AppFontFamily.CerebriSansPro_Regular,

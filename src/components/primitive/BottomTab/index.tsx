@@ -4,10 +4,10 @@ import {
   FlatList,
   StyleSheet,
   Dimensions,
-  I18nManager,
   TouchableOpacity,
 } from 'react-native';
 import {AppColor, WP, appSVG} from '@shared/exporter';
+import {useSelector} from 'react-redux';
 
 const {width} = Dimensions.get('window');
 
@@ -85,6 +85,7 @@ export const BottomTab: React.FC<BottomTabProps> = ({
   descriptors,
   navigation,
 }) => {
+  const {isRTL} = useSelector((state: any) => state.app);
   return (
     <View style={styles.tabsContainer}>
       <FlatList
@@ -94,7 +95,9 @@ export const BottomTab: React.FC<BottomTabProps> = ({
         keyExtractor={item => item.key}
         columnWrapperStyle={[
           styles.tabRow,
-          {flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row'},
+          {
+            flexDirection: isRTL ? 'row-reverse' : 'row',
+          },
         ]}
         renderItem={({item, index}) => (
           <RenderTabs

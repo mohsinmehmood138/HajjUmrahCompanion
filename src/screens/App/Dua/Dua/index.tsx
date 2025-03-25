@@ -1,29 +1,21 @@
 import React, {useState, useEffect} from 'react';
-import {
-  Text,
-  View,
-  FlatList,
-  I18nManager,
-  TouchableOpacity,
-} from 'react-native';
-import {t} from 'i18next';
+import {Text, View, FlatList, TouchableOpacity} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import styles from './styles';
 import {appSVG} from '@src/shared/assets';
-import {db} from '@src/config/firebaseConfig';
 import {Routes, WP} from '@src/shared/exporter';
+import {db} from '@src/config/firebaseConfig';
 import {AppHeader} from '@src/shared/components';
 import {setDuaData} from '@src/redux/app/appSlice';
-import {useIsFocused} from '@react-navigation/native';
+import TranslateText from '@src/hooks/useTranslate';
 import {AppInput} from '@src/components/primitive/AppInput';
 import {MainWrapper} from '@src/components/primitive/MainWrapper';
 import {collection, onSnapshot, orderBy, query} from 'firebase/firestore';
 
 const Dua = ({navigation}: any) => {
   const dispatch = useDispatch();
-  const isFocused = useIsFocused();
   const [searchText, setSearchText] = useState('');
-  const {duaData} = useSelector((state: any) => state.app);
+  const {duaData, isRTL} = useSelector((state: any) => state.app);
   const [filteredData, setFilteredData] = useState(duaData);
 
   useEffect(() => {
@@ -70,28 +62,34 @@ const Dua = ({navigation}: any) => {
         activeOpacity={0.8}
         style={[
           styles.listContainer,
-          {flexDirection: I18nManager?.isRTL ? 'row-reverse' : 'row'},
+          {
+            flexDirection: isRTL ? 'row-reverse' : 'row',
+          },
         ]}
         onPress={() => handleDuaPress(item)}>
         <View
           style={[
             styles.textContainer,
-            {flexDirection: I18nManager?.isRTL ? 'row-reverse' : 'row'},
+            {
+              flexDirection: isRTL ? 'row-reverse' : 'row',
+            },
           ]}>
-          <Text>{item.id} .</Text>
-          <Text
+          <Text>
+            {isRTL && '.'} {item.id} {!isRTL && '.'}
+          </Text>
+          <TranslateText
             style={[
               styles.headingStyle,
               {
-                marginRight: I18nManager?.isRTL ? WP('4') : 0,
+                marginRight: isRTL ? WP('4') : 0,
               },
             ]}>
             {item.title}
-          </Text>
+          </TranslateText>
         </View>
         <View
           style={{
-            transform: [{rotate: I18nManager?.isRTL ? '180deg' : '0deg'}],
+            transform: isRTL ? [{rotate: '180deg'}] : [{rotate: '0deg'}],
           }}>
           {appSVG.ChevronRightBlack}
         </View>
@@ -101,7 +99,7 @@ const Dua = ({navigation}: any) => {
 
   return (
     <MainWrapper style={styles.container}>
-      <AppHeader title={t('dua.heading')} />
+      <AppHeader title="Prayer" />
       <View style={styles.bodyContainer}>
         <AppInput
           onChangeText={text => setSearchText(text)}

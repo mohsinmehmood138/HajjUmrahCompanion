@@ -11,6 +11,7 @@ export const appImages = {
   umrahFour: require('../../assets/Images/umrah_four.jpeg'),
   backGroundImage: require('../../assets/Images/backGround_img.png'),
   dummyImage: require('../../assets/Images/dummy_image.jpeg'),
+  wifiImage: require('../../assets/Images/wifi.png'),
 };
 
 // App Icons

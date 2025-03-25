@@ -1,5 +1,11 @@
 import {StyleSheet} from 'react-native';
-import {WP, AppColor, AppFontSize, AppFontFamily} from '@src/shared/exporter';
+import {
+  WP,
+  AppColor,
+  AppFontSize,
+  AppFontFamily,
+  HP,
+} from '@src/shared/exporter';
 
 const styles = StyleSheet.create({
   container: {
@@ -52,6 +58,38 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 16,
     fontWeight: '500',
+  },
+  modalContainer: {
+    width: '80%',
+    height: HP('25'),
+    padding: WP('3'),
+    alignSelf: 'center',
+    borderRadius: WP('3'),
+    backgroundColor: AppColor.Neutrals.White,
+  },
+  wifiImage: {
+    width: WP('18'),
+    height: WP('18'),
+    marginTop: WP('3'),
+    alignSelf: 'center',
+    borderRadius: WP('18'),
+  },
+  connectionError: {
+    marginTop: WP('3'),
+    textAlign: 'center',
+    color: AppColor.Neutrals.Red,
+    fontSize: AppFontSize.FONT_SIZE_18,
+    fontFamily: AppFontFamily.CerebriSansPro_SemiBold,
+  },
+  pleaseText: {
+    width: WP('40%'),
+    marginTop: WP('3'),
+    textAlign: 'center',
+    lineHeight: WP('6'),
+    alignSelf: 'center',
+    color: AppColor.Neutrals.Black,
+    fontSize: AppFontSize.FONT_SIZE_14,
+    fontFamily: AppFontFamily.CerebriSansPro_Medium,
   },
 });
 

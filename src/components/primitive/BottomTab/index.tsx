@@ -85,7 +85,6 @@ export const BottomTab: React.FC<BottomTabProps> = ({
   descriptors,
   navigation,
 }) => {
-  const {isRTL} = useSelector((state: any) => state.app);
   return (
     <View style={styles.tabsContainer}>
       <FlatList
@@ -93,12 +92,7 @@ export const BottomTab: React.FC<BottomTabProps> = ({
         data={state?.routes}
         scrollEnabled={false}
         keyExtractor={item => item.key}
-        columnWrapperStyle={[
-          styles.tabRow,
-          {
-            flexDirection: isRTL ? 'row-reverse' : 'row',
-          },
-        ]}
+        columnWrapperStyle={[styles.tabRow]}
         renderItem={({item, index}) => (
           <RenderTabs
             item={item}

@@ -14,6 +14,7 @@ const appSlice = createSlice({
     umrah_checklist: UMRAH_CHECKLIST_DATA,
     selectedLanguage: {id: '1', name: 'English', code: 'en', selected: true},
     isRTL: false,
+    isFirstTime: true,
   },
   reducers: {
     setIsWalkthrough: state => {
@@ -40,6 +41,9 @@ const appSlice = createSlice({
     setTranslationLoading: (state, action) => {
       state.translationLoading = action.payload;
     },
+    setFirstTime: (state, action) => {
+      state.isFirstTime = action.payload;
+    },
     setIsRTL: (state, action) => {
       state.isRTL = action.payload;
     },
@@ -60,6 +64,7 @@ export const {
   setSelectedLanguage,
   setTranslationLoading,
   setIsRTL,
+  setFirstTime,
 } = appSlice.actions;
 
 export default appSlice.reducer;

@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {View, Image, FlatList, TouchableOpacity, Text} from 'react-native';
+import {
+  View,
+  Image,
+  FlatList,
+  TouchableOpacity,
+  Text,
+  Alert,
+} from 'react-native';
 import i18next from 'i18next';
 import RNRestart from 'react-native-restart';
 import styles from './styles';
@@ -13,11 +20,14 @@ import {AppButton} from '@src/components/primitive/AppButton';
 import {setTranslationLoading} from '@src/redux/app/appSlice';
 import {MainWrapper} from '@src/components/primitive/MainWrapper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import NetInfo from '@react-native-community/netinfo';
+import WifiModal from '@src/components/primitive/WifiModal';
 
 const Language = () => {
   const dispatch = useDispatch();
   const {selectedLanguage, isRTL} = useSelector((state: any) => state.app);
   const [languages, setLanguages] = useState(COUNTRY_LANGUAGES);
+  const [isModalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     const selectLanguage: any = languages.find(
@@ -44,21 +54,31 @@ const Language = () => {
     console.log('selectedLang', selectedLanguage);
     try {
       const selectedLang = languages.find(lang => lang.selected === true);
-      dispatch(setTranslationLoading(true));
-      dispatch(setIsRTL(selectedLang?.isRTL));
-      dispatch(setSelectedLanguage(selectedLang));
-      await AsyncStorage.setItem('needsTranslation', 'true');
 
-      i18next.changeLanguage(selectedLang?.code);
+      const state = await NetInfo.fetch();
 
-      setTimeout(() => {
-        RNRestart.Restart();
-      }, 1000);
+      console.log('Connection type:', state.type);
+      console.log('Is connected?', state.isConnected);
+
+      if (state.isConnected) {
+        setModalVisible(false);
+        dispatch(setTranslationLoading(true));
+        dispatch(setIsRTL(selectedLang?.isRTL));
+        dispatch(setSelectedLanguage(selectedLang));
+        await AsyncStorage.setItem('needsTranslation', 'true');
+
+        i18next.changeLanguage(selectedLang?.code);
+
+        setTimeout(() => {
+          RNRestart.Restart();
+        }, 1000);
+      } else {
+        setModalVisible(true);
+      }
     } catch (error) {
       console.error('Error changing language', error);
     }
   };
-
   const renderLanguageItem = ({item}: any) => (
     <TouchableOpacity
       style={[
@@ -90,6 +110,17 @@ const Language = () => {
         </View>
       </View>
       <Image source={appImages.backGroundImage} style={styles.bottomImage} />
+      <WifiModal
+        isVisible={isModalVisible}
+        onClose={() => setModalVisible(false)}>
+        <View style={styles.modalContainer}>
+          <Image source={appImages.wifiImage} style={styles.wifiImage} />
+          <Text style={styles.connectionError}>No Internet Connection</Text>
+          <Text style={styles.pleaseText}>
+            Connect With Wifi or Mobile Data
+          </Text>
+        </View>
+      </WifiModal>
     </MainWrapper>
   );
 };

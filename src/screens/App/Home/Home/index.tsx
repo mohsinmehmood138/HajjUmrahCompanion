@@ -7,7 +7,6 @@ import {
   ScrollView,
   ImageBackground,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import styles from './styles';

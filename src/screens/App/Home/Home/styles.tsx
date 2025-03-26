@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
     height: WP('18'),
     marginTop: WP('3'),
     alignSelf: 'center',
-    borderRadius: WP('18'),
   },
   connectionError: {
     marginTop: WP('3'),

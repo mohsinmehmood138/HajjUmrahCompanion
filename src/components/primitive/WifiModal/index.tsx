@@ -4,7 +4,7 @@ import Modal from 'react-native-modal';
 
 interface ModalProps {
   isVisible: boolean;
-  onClose: () => void;
+  onClose?: () => void;
   children?: React.ReactNode;
 }
 

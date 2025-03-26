@@ -1,11 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {
-  WP,
-  AppColor,
-  AppFontSize,
-  AppFontFamily,
-  HP,
-} from '@src/shared/exporter';
+import {WP, AppColor, AppFontSize, AppFontFamily} from '@src/shared/exporter';
 
 const styles = StyleSheet.create({
   container: {
@@ -52,19 +46,19 @@ const styles = StyleSheet.create({
   loadingContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
+    padding: WP('5'),
   },
   loadingText: {
-    marginTop: 10,
-    fontSize: 16,
+    marginTop: WP('4'),
+    fontSize: WP('4'),
     fontWeight: '500',
   },
   modalContainer: {
     width: '80%',
-    height: HP('25'),
-    padding: WP('3'),
     alignSelf: 'center',
     borderRadius: WP('3'),
+    paddingVertical: WP('5'),
+    paddingHorizontal: WP('3'),
     backgroundColor: AppColor.Neutrals.White,
   },
   wifiImage: {
@@ -72,7 +66,6 @@ const styles = StyleSheet.create({
     height: WP('18'),
     marginTop: WP('3'),
     alignSelf: 'center',
-    borderRadius: WP('18'),
   },
   connectionError: {
     marginTop: WP('3'),
@@ -82,10 +75,10 @@ const styles = StyleSheet.create({
     fontFamily: AppFontFamily.CerebriSansPro_SemiBold,
   },
   pleaseText: {
-    width: WP('40%'),
-    marginTop: WP('3'),
+    width: WP('60%'),
+    marginTop: WP('4'),
     textAlign: 'center',
-    lineHeight: WP('6'),
+    lineHeight: WP('4'),
     alignSelf: 'center',
     color: AppColor.Neutrals.Black,
     fontSize: AppFontSize.FONT_SIZE_14,

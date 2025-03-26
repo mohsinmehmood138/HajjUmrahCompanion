@@ -1,3 +1,4 @@
+import {StyleSheet} from 'react-native';
 import {
   HP,
   WP,
@@ -5,7 +6,6 @@ import {
   AppFontSize,
   AppFontFamily,
 } from '@src/shared/exporter';
-import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {

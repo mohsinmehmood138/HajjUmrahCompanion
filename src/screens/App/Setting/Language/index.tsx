@@ -1,12 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Image,
-  FlatList,
-  TouchableOpacity,
-  Text,
-  Alert,
-} from 'react-native';
+import {View, Image, FlatList, TouchableOpacity, Text} from 'react-native';
 import i18next from 'i18next';
 import RNRestart from 'react-native-restart';
 import styles from './styles';
@@ -14,14 +7,14 @@ import {AppHeader} from '@src/shared/components';
 import {setIsRTL} from '@src/redux/app/appSlice';
 import {appImages, appSVG} from '@src/shared/assets';
 import {useDispatch, useSelector} from 'react-redux';
+import NetInfo from '@react-native-community/netinfo';
 import {COUNTRY_LANGUAGES} from '@src/shared/exporter';
 import {setSelectedLanguage} from '@src/redux/app/appSlice';
+import WifiModal from '@src/components/primitive/WifiModal';
 import {AppButton} from '@src/components/primitive/AppButton';
 import {setTranslationLoading} from '@src/redux/app/appSlice';
 import {MainWrapper} from '@src/components/primitive/MainWrapper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import NetInfo from '@react-native-community/netinfo';
-import WifiModal from '@src/components/primitive/WifiModal';
 
 const Language = () => {
   const dispatch = useDispatch();
@@ -117,7 +110,7 @@ const Language = () => {
           <Image source={appImages.wifiImage} style={styles.wifiImage} />
           <Text style={styles.connectionError}>No Internet Connection</Text>
           <Text style={styles.pleaseText}>
-            Connect With Wifi or Mobile Data
+            Please check your internet connection and try again.
           </Text>
         </View>
       </WifiModal>

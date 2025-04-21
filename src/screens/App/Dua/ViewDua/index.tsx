@@ -19,6 +19,8 @@ const ViewDua = ({route}: any) => {
   const {dua} = route.params;
   const {isRTL} = useSelector((state: any) => state.app);
 
+  console.log('dua', dua);
+
   const handleShare = async () => {
     try {
       const shareContent = {
@@ -44,7 +46,7 @@ const ViewDua = ({route}: any) => {
 
   return (
     <MainWrapper>
-      <AppHeader title={<TranslateText>{dua?.title}</TranslateText>} />
+      <AppHeader title={dua?.title} />
       <ScrollView style={styles.container}>
         <View style={styles.arabicContainer}>
           <Text style={styles.arabicText}>{dua.arabic}</Text>

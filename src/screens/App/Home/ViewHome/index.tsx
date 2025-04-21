@@ -30,15 +30,22 @@ import {
 } from '@src/shared/exporter';
 import TranslateText from '@src/hooks/useTranslate';
 import {AppLoader} from '@src/components/primitive/AppLoader';
+import {
+  HAJJ_GUIDE_DATA,
+  SAFETY_GUIDE_DATA,
+  UMRAH_CHECKLIST_DATA,
+  PRE_UMRAH_PREPARATION,
+} from '@src/shared/utils/constant';
 
 const ViewHome = ({navigation, route}: any) => {
   const {item} = route?.params;
   const dispatch = useDispatch();
+
   const [allTextsLoaded, setAllTextsLoaded] = useState(false);
   const {translationLoading, isRTL} = useSelector((state: any) => state.app);
   const data = useSelector((state: any) => state?.app[`${item?.apiKey}`]);
   const [checklistData, setChecklistData] = useState(data);
-
+  console.log('data', data);
   useEffect(() => {
     if (translationLoading) {
       const timer = setTimeout(() => {
@@ -63,27 +70,45 @@ const ViewHome = ({navigation, route}: any) => {
             duaArray.push({id: doc.id, ...doc.data()});
           }
         });
-        if (duaArray?.length == 0) return;
-        setChecklistData([...duaArray]);
-        switch (item?.apiKey) {
-          case PRE_UMRAH:
-            dispatch(setPreUmrah([...duaArray]));
-            break;
-          case HAJJ_GUIDE:
-            dispatch(setHajjGuide([...duaArray]));
-            break;
-          case UMRAH_CHECKLIST:
-            dispatch(setUmrahChecklist([...duaArray]));
-            break;
-          case SAFETY_GUIDE:
-            dispatch(setSafetyGuide([...duaArray]));
-            break;
+        if (duaArray?.length === 0) {
+          switch (item?.apiKey) {
+            case PRE_UMRAH:
+              dispatch(setPreUmrah([]));
+              break;
+            case HAJJ_GUIDE:
+              dispatch(setHajjGuide([]));
+              break;
+            case UMRAH_CHECKLIST:
+              dispatch(setUmrahChecklist([]));
+              break;
+            case SAFETY_GUIDE:
+              dispatch(setSafetyGuide([]));
+              break;
+          }
 
-          default:
-            console.warn(
-              `No dispatch action defined for apiKey: ${item?.apiKey}`,
-            );
-            break;
+          setChecklistData([]);
+        } else {
+          setChecklistData([...duaArray]);
+          switch (item?.apiKey) {
+            case PRE_UMRAH:
+              dispatch(setPreUmrah([...duaArray]));
+              break;
+            case HAJJ_GUIDE:
+              dispatch(setHajjGuide([...duaArray]));
+              break;
+            case UMRAH_CHECKLIST:
+              dispatch(setUmrahChecklist([...duaArray]));
+              break;
+            case SAFETY_GUIDE:
+              dispatch(setSafetyGuide([...duaArray]));
+              break;
+
+            default:
+              console.warn(
+                `No dispatch action defined for apiKey: ${item?.apiKey}`,
+              );
+              break;
+          }
         }
       },
       error => {
@@ -92,7 +117,7 @@ const ViewHome = ({navigation, route}: any) => {
     );
 
     return () => unsubscribe();
-  }, [item?.apiKey]);
+  }, [item?.apiKey, dispatch]);
 
   const toggleSection = (sectionId: any) => {
     setChecklistData(
@@ -157,7 +182,7 @@ const ViewHome = ({navigation, route}: any) => {
     </TouchableOpacity>
   );
 
-  const renderSection = ({item: section}: any) => (
+  const renderSection = ({item: section, index}: any) => (
     <View key={section.id}>
       <TouchableOpacity
         activeOpacity={0.8}
@@ -177,7 +202,7 @@ const ViewHome = ({navigation, route}: any) => {
             },
           ]}>
           <View style={[styles.listCountingStyle]}>
-            <Text>{section.id}</Text>
+            <Text>{index + 1}</Text>
           </View>
           <TranslateText
             style={[
@@ -196,11 +221,18 @@ const ViewHome = ({navigation, route}: any) => {
       {section.showValue && (
         <View style={styles.checklistItemsContainer}>
           <FlatList
-            data={section.items}
+            data={section?.items}
             renderItem={itemProps =>
               renderChecklistItem({...itemProps, section})
             }
             keyExtractor={item => item.id}
+            ListEmptyComponent={() => (
+              <View style={styles.emptyListContainer}>
+                <TranslateText style={styles.emptyListText}>
+                  No items available.
+                </TranslateText>
+              </View>
+            )}
           />
         </View>
       )}
@@ -260,6 +292,13 @@ const ViewHome = ({navigation, route}: any) => {
           renderItem={renderSection}
           keyExtractor={section => section.id.toString()}
           showsVerticalScrollIndicator={false}
+          ListEmptyComponent={() => (
+            <View style={styles.emptyListContainer}>
+              <TranslateText style={styles.emptyListText}>
+                No items available.
+              </TranslateText>
+            </View>
+          )}
         />
       </View>
       <Image source={appImages.backGroundImage} style={styles.bottomImage} />

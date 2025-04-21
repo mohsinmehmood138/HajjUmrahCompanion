@@ -3,7 +3,7 @@ import {Text, View, FlatList, TouchableOpacity} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import styles from './styles';
 import {appSVG} from '@src/shared/assets';
-import {Routes, WP} from '@src/shared/exporter';
+import {DUA_DATA, Routes, WP} from '@src/shared/exporter';
 import {db} from '@src/config/firebaseConfig';
 import {AppHeader} from '@src/shared/components';
 import {setDuaData} from '@src/redux/app/appSlice';
@@ -36,6 +36,8 @@ const Dua = ({navigation}: any) => {
     const duaCollection = collection(db, 'dua_collection');
     const duaQuery = query(duaCollection, orderBy('id', 'asc'));
 
+    console.log('duaQuery', duaQuery);
+
     const unsubscribe = onSnapshot(
       duaQuery,
       querySnapshot => {
@@ -47,6 +49,8 @@ const Dua = ({navigation}: any) => {
         });
         if (duaArray.length > 0) {
           dispatch(setDuaData([...duaArray]));
+        } else {
+          dispatch(setDuaData([]));
         }
       },
       error => {
@@ -56,7 +60,7 @@ const Dua = ({navigation}: any) => {
 
     return () => unsubscribe();
   }, []);
-  const renderItem = ({item}: any) => {
+  const renderItem = ({item, index}: any) => {
     return (
       <TouchableOpacity
         activeOpacity={0.8}
@@ -75,7 +79,7 @@ const Dua = ({navigation}: any) => {
             },
           ]}>
           <Text>
-            {isRTL && '.'} {item.id} {!isRTL && '.'}
+            {isRTL && '.'} {index + 1} {!isRTL && '.'}
           </Text>
           <TranslateText
             style={[
@@ -115,6 +119,11 @@ const Dua = ({navigation}: any) => {
             keyExtractor={item => item.id.toString()}
             renderItem={renderItem}
             showsVerticalScrollIndicator={false}
+            ListEmptyComponent={
+              <View style={styles.emptyListContainer}>
+                <Text style={styles.emptyListText}>No Dua found</Text>
+              </View>
+            }
           />
         </View>
       </View>

@@ -480,3 +480,229 @@ export const SAFETY_GUIDE_DATA = [
     ],
   },
 ];
+
+export const PRE_UMRAH_PREPARATION = [
+  {
+    id: 1,
+    label: 'Knowledge & Understanding',
+    showValue: false,
+    items: [
+      {
+        id: 'knowledge-1',
+        text: 'Study the Purpose of Umrah',
+        description: 'Understand the spiritual significance and benefits',
+        selected: false,
+      },
+      {
+        id: 'knowledge-2',
+        text: 'Learn the Fiqh of Umrah',
+        description: 'Know the do’s and don’ts as per Islamic teachings',
+        selected: false,
+      },
+      {
+        id: 'knowledge-3',
+        text: 'Watch or Attend Umrah Seminars',
+        description:
+          'Get practical insights from experienced travelers or scholars',
+        selected: false,
+      },
+    ],
+  },
+  {
+    id: 2,
+    label: 'Health & Physical Preparation',
+    showValue: false,
+    items: [
+      {
+        id: 'health-1',
+        text: 'Visit a Doctor for a Checkup',
+        description: 'Ensure you are fit for travel and long walks',
+        selected: false,
+      },
+      {
+        id: 'health-2',
+        text: 'Get Necessary Vaccinations',
+        description: 'Follow health guidelines for travelers to Saudi Arabia',
+        selected: false,
+      },
+      {
+        id: 'health-3',
+        text: 'Exercise Regularly',
+        description: 'Build stamina for the rituals of Umrah',
+        selected: false,
+      },
+    ],
+  },
+  {
+    id: 3,
+    label: 'Spiritual Readiness',
+    showValue: false,
+    items: [
+      {
+        id: 'spiritual-1',
+        text: 'Reflect on Personal Intentions',
+        description: 'Focus on self-purification and sincerity',
+        selected: false,
+      },
+      {
+        id: 'spiritual-2',
+        text: 'Start Practicing More Worship',
+        description: 'Increase your prayers, dhikr, and Quran recitation',
+        selected: false,
+      },
+      {
+        id: 'spiritual-3',
+        text: 'Make a Dua List',
+        description: 'Prepare a written list of personal and general duas',
+        selected: false,
+      },
+    ],
+  },
+  {
+    id: 4,
+    label: 'Family & Social Responsibilities',
+    showValue: false,
+    items: [
+      {
+        id: 'family-1',
+        text: 'Settle Debts and Dues',
+        description: 'Clear financial and personal obligations',
+        selected: false,
+      },
+      {
+        id: 'family-2',
+        text: 'Inform Close Ones',
+        description: 'Let family and friends know about your travel plans',
+        selected: false,
+      },
+      {
+        id: 'family-3',
+        text: 'Assign Emergency Contacts',
+        description: 'Share emergency numbers and travel itinerary',
+        selected: false,
+      },
+    ],
+  },
+];
+
+export const HAJJ_GUIDE_DATA = [
+  {
+    id: 1,
+    label: 'Pre-Hajj Preparation',
+    showValue: false,
+    items: [
+      {
+        id: 'pre-hajj-1',
+        text: 'Apply for Hajj Visa & Registration',
+        description:
+          'Ensure official registration with an authorized Hajj operator',
+        selected: false,
+      },
+      {
+        id: 'pre-hajj-2',
+        text: 'Attend Hajj Training Sessions',
+        description: 'Understand rituals, rules, and practical tips',
+        selected: false,
+      },
+      {
+        id: 'pre-hajj-3',
+        text: 'Plan Financially',
+        description: 'Budget for travel, accommodation, food, and emergencies',
+        selected: false,
+      },
+      {
+        id: 'pre-hajj-4',
+        text: 'Prepare Travel Essentials',
+        description:
+          'Pack necessary clothing, toiletries, medications, and documents',
+        selected: false,
+      },
+    ],
+  },
+  {
+    id: 2,
+    label: 'Spiritual Preparation',
+    showValue: false,
+    items: [
+      {
+        id: 'hajj-spiritual-1',
+        text: 'Make Sincere Intention (Niyyah)',
+        description: 'Purify your heart and aim to please Allah',
+        selected: false,
+      },
+      {
+        id: 'hajj-spiritual-2',
+        text: 'Repent and Seek Forgiveness',
+        description:
+          'Resolve conflicts and cleanse the soul before the journey',
+        selected: false,
+      },
+      {
+        id: 'hajj-spiritual-3',
+        text: 'Increase Ibadah (Worship)',
+        description:
+          'Focus on prayers, dhikr, and Quran before and during Hajj',
+        selected: false,
+      },
+    ],
+  },
+  {
+    id: 3,
+    label: 'Hajj Rituals Overview',
+    showValue: false,
+    items: [
+      {
+        id: 'rituals-1',
+        text: 'Learn the Steps of Hajj',
+        description:
+          'Familiarize with each day: Ihram, Tawaf, Sa’i, Mina, Arafah, Muzdalifah, etc.',
+        selected: false,
+      },
+      {
+        id: 'rituals-2',
+        text: 'Understand Ihram Rules',
+        description: 'Know what’s forbidden while in the state of Ihram',
+        selected: false,
+      },
+      {
+        id: 'rituals-3',
+        text: 'Practice Duas and Talbiyah',
+        description:
+          'Memorize or carry a guide for supplications during rituals',
+        selected: false,
+      },
+    ],
+  },
+  {
+    id: 4,
+    label: 'Health & Safety Tips',
+    showValue: false,
+    items: [
+      {
+        id: 'health-hajj-1',
+        text: 'Stay Hydrated & Eat Well',
+        description: 'Drink plenty of water and avoid overexertion',
+        selected: false,
+      },
+      {
+        id: 'health-hajj-2',
+        text: 'Wear Comfortable Footwear',
+        description: 'Use padded sandals/shoes for walking long distances',
+        selected: false,
+      },
+      {
+        id: 'health-hajj-3',
+        text: 'Use Face Mask & Hygiene Supplies',
+        description: 'Carry sanitizers, tissues, and avoid infections',
+        selected: false,
+      },
+      {
+        id: 'health-hajj-4',
+        text: 'Medical Checkup & Medications',
+        description:
+          'Bring essential prescriptions and have a doctor’s clearance',
+        selected: false,
+      },
+    ],
+  },
+];

@@ -115,5 +115,16 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
   },
+  emptyListContainer: {
+    flex: 1,
+    alignSelf: 'center',
+    alignItems: 'center',
+  },
+  emptyListText: {
+    marginTop: WP('5'),
+    color: AppColor.Neutrals.Black,
+    fontSize: AppFontSize.FONT_SIZE_16,
+    fontFamily: AppFontFamily.CerebriSansPro_Medium,
+  },
 });
 export default styles;

@@ -36,5 +36,16 @@ export const styles = StyleSheet.create({
     fontSize: AppFontSize.FONT_SIZE_16,
     fontFamily: AppFontFamily.CerebriSansPro_Regular,
   },
+  emptyListContainer: {
+    flex: 1,
+    alignSelf: 'center',
+    alignItems: 'center',
+  },
+  emptyListText: {
+    marginTop: WP('5'),
+    color: AppColor.Neutrals.Black,
+    fontSize: AppFontSize.FONT_SIZE_16,
+    fontFamily: AppFontFamily.CerebriSansPro_Medium,
+  },
 });
 export default styles;

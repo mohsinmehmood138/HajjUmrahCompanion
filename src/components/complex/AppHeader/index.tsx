@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
   textStyle: {
     flex: 1,
     textAlign: 'center',
+    textTransform: 'capitalize',
     color: AppColor.Neutrals.White,
     fontSize: AppFontSize.FONT_SIZE_16,
     fontFamily: AppFontFamily.CerebriSansPro_SemiBold,

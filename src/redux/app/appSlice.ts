@@ -1,17 +1,15 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {DUA_DATA} from '@src/shared/exporter';
-import {UMRAH_CHECKLIST_DATA} from '@src/shared/utils/constant';
 
 const appSlice = createSlice({
   name: 'auth',
   initialState: {
-    duaData: DUA_DATA,
+    duaData: [],
     isWalkthrough: false,
     translationLoading: false,
-    pre_umrah: UMRAH_CHECKLIST_DATA,
-    hajj_guide: UMRAH_CHECKLIST_DATA,
-    safety_guide: UMRAH_CHECKLIST_DATA,
-    umrah_checklist: UMRAH_CHECKLIST_DATA,
+    pre_umrah: [],
+    hajj_guide: [],
+    safety_guide: [],
+    umrah_checklist: [],
     selectedLanguage: {id: '1', name: 'English', code: 'en', selected: true},
     isRTL: false,
     isFirstTime: true,
@@ -25,6 +23,9 @@ const appSlice = createSlice({
     },
     setDuaData: (state, action) => {
       state.duaData = action.payload;
+    },
+    clearDuaData: state => {
+      state.duaData = [];
     },
     setPreUmrah: (state, action) => {
       state.pre_umrah = action.payload;
@@ -65,6 +66,7 @@ export const {
   setTranslationLoading,
   setIsRTL,
   setFirstTime,
+  clearDuaData,
 } = appSlice.actions;
 
 export default appSlice.reducer;

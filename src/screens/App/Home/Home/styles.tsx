@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
   overLapView: {
     width: '100%',
     height: '100%',
+
     paddingBottom: WP('3'),
     alignItems: 'flex-end',
     paddingHorizontal: WP('3'),
@@ -50,7 +51,6 @@ const styles = StyleSheet.create({
     fontFamily: AppFontFamily.CerebriSansPro_SemiBold,
   },
   desTextStyle: {
-    alignSelf: 'flex-end',
     color: AppColor.Neutrals.White,
     fontSize: AppFontSize.FONT_SIZE_14,
     fontFamily: AppFontFamily.CerebriSansPro_Regular,

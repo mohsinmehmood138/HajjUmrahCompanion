@@ -1,12 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import {Text} from 'react-native';
 import {useSelector} from 'react-redux';
-import {useTranslateTextMutation} from '@src/redux/TranslationApi/translationApi';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import NetInfo from '@react-native-community/netinfo';
 
-const TranslateText = ({children, style, cacheKey, ...props}: any) => {
-  const [translateText] = useTranslateTextMutation();
+const TranslateText = ({
+  translateText,
+  children,
+  style,
+  cacheKey,
+  ...props
+}: any) => {
   const {selectedLanguage} = useSelector((state: any) => state.app);
+  const [isOffline, setIsOffline] = useState(false);
   const [translatedContent, setTranslatedContent] = useState<string | null>(
     null,
   );
@@ -14,6 +20,17 @@ const TranslateText = ({children, style, cacheKey, ...props}: any) => {
   const textToTranslate = typeof children === 'string' ? children : '';
 
   useEffect(() => {
+    const unsubscribeNetInfo = NetInfo.addEventListener(state => {
+      setIsOffline(!state.isConnected);
+    });
+
+    return () => unsubscribeNetInfo();
+  }, []);
+
+  useEffect(() => {
+    if (isOffline) {
+      return;
+    }
     const uniqueCacheKey =
       cacheKey || `${selectedLanguage.code}:${textToTranslate}`;
 
@@ -51,7 +68,7 @@ const TranslateText = ({children, style, cacheKey, ...props}: any) => {
 
   return (
     <Text style={style} {...props}>
-      {translatedContent?.replace('_', ' ') || 'Loading ...'}
+      {translatedContent}
     </Text>
   );
 };

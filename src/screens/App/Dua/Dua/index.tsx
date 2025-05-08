@@ -3,20 +3,36 @@ import {Text, View, FlatList, TouchableOpacity} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import styles from './styles';
 import {appSVG} from '@src/shared/assets';
-import {DUA_DATA, Routes, WP} from '@src/shared/exporter';
+import {Routes, WP} from '@src/shared/exporter';
 import {db} from '@src/config/firebaseConfig';
 import {AppHeader} from '@src/shared/components';
 import {setDuaData} from '@src/redux/app/appSlice';
 import TranslateText from '@src/hooks/useTranslate';
+import NetInfo from '@react-native-community/netinfo';
 import {AppInput} from '@src/components/primitive/AppInput';
+import {AppLoader} from '@src/components/primitive/AppLoader';
 import {MainWrapper} from '@src/components/primitive/MainWrapper';
 import {collection, onSnapshot, orderBy, query} from 'firebase/firestore';
+import {useTranslateTextMutation} from '@src/redux/TranslationApi/translationApi';
 
 const Dua = ({navigation}: any) => {
   const dispatch = useDispatch();
   const [searchText, setSearchText] = useState('');
-  const {duaData, isRTL} = useSelector((state: any) => state.app);
+  const [isOffline, setIsOffline] = useState(false);
+  const {duaData, isRTL, selectedLanguage} = useSelector(
+    (state: any) => state.app,
+  );
   const [filteredData, setFilteredData] = useState(duaData);
+  const [translateText, {isLoading: translateLoading}] =
+    useTranslateTextMutation();
+
+  useEffect(() => {
+    const unsubscribeNetInfo = NetInfo.addEventListener(state => {
+      setIsOffline(!state.isConnected);
+    });
+
+    return () => unsubscribeNetInfo();
+  }, []);
 
   useEffect(() => {
     if (searchText) {
@@ -32,25 +48,28 @@ const Dua = ({navigation}: any) => {
   const handleDuaPress = (dua: any) => {
     navigation.navigate(Routes.ViewDua, {dua});
   };
+
   useEffect(() => {
+    if (isOffline) {
+      return;
+    }
+
     const duaCollection = collection(db, 'dua_collection');
     const duaQuery = query(duaCollection, orderBy('id', 'asc'));
-
-    console.log('duaQuery', duaQuery);
 
     const unsubscribe = onSnapshot(
       duaQuery,
       querySnapshot => {
-        const duaArray: any[] = [];
+        let duaArray: any = [];
         querySnapshot.forEach(doc => {
           if (doc.exists()) {
             duaArray.push({id: doc.id, ...doc.data()});
           }
         });
         if (duaArray.length > 0) {
-          dispatch(setDuaData([...duaArray]));
+          fetchTranslations(duaArray);
         } else {
-          dispatch(setDuaData([]));
+          fetchTranslations([]);
         }
       },
       error => {
@@ -59,7 +78,52 @@ const Dua = ({navigation}: any) => {
     );
 
     return () => unsubscribe();
-  }, []);
+  }, [isOffline]);
+
+  const fetchTranslations = async (duaArray: any) => {
+    try {
+      const translatedData = await Promise.all(
+        duaArray.map(async (item: any) => {
+          const translatedTitle = await translateText({
+            from: 'auto',
+            to: selectedLanguage?.code,
+            text: item.title,
+          }).unwrap();
+
+          const translateTranslation = await translateText({
+            from: 'auto',
+            to: selectedLanguage?.code,
+            text: item.translation,
+          }).unwrap();
+
+          const translatedDescription = await translateText({
+            from: 'auto',
+            to: selectedLanguage?.code,
+            text: item.description,
+          }).unwrap();
+
+          const translatedAdditionalInfo = await translateText({
+            from: 'auto',
+            to: selectedLanguage?.code,
+            text: item.additionalInfo,
+          }).unwrap();
+
+          return {
+            ...item,
+            title: translatedTitle || item.title,
+            description: translatedDescription || item.description,
+            additionalInfo: translatedAdditionalInfo || item.additionalInfo,
+            translation: translateTranslation || item.translation,
+          };
+        }),
+      );
+
+      dispatch(setDuaData(translatedData));
+    } catch (error) {
+      console.error('Error translating data:', error);
+    }
+  };
+
   const renderItem = ({item, index}: any) => {
     return (
       <TouchableOpacity
@@ -82,13 +146,14 @@ const Dua = ({navigation}: any) => {
             {isRTL && '.'} {index + 1} {!isRTL && '.'}
           </Text>
           <TranslateText
+            translateText={translateText}
             style={[
               styles.headingStyle,
               {
                 marginRight: isRTL ? WP('4') : 0,
               },
             ]}>
-            {item.title}
+            {item.title?.trans}
           </TranslateText>
         </View>
         <View
@@ -113,19 +178,26 @@ const Dua = ({navigation}: any) => {
           inputStyle={styles.inputStyle}
           placeholder="Search"
         />
-        <View style={{flex: 1}}>
-          <FlatList
-            data={filteredData}
-            keyExtractor={item => item.id.toString()}
-            renderItem={renderItem}
-            showsVerticalScrollIndicator={false}
-            ListEmptyComponent={
-              <View style={styles.emptyListContainer}>
-                <Text style={styles.emptyListText}>No Dua found</Text>
-              </View>
-            }
-          />
-        </View>
+        {translateLoading ? (
+          <AppLoader />
+        ) : (
+          <View style={{flex: 1}}>
+            <FlatList
+              key={filteredData.length}
+              data={filteredData}
+              keyExtractor={item => item.id.toString()}
+              renderItem={renderItem}
+              showsVerticalScrollIndicator={false}
+              ListEmptyComponent={
+                <View style={styles.emptyListContainer}>
+                  <Text style={styles.emptyListText}>
+                    {!translateLoading && 'No Dua found.'}
+                  </Text>
+                </View>
+              }
+            />
+          </View>
+        )}
       </View>
     </MainWrapper>
   );

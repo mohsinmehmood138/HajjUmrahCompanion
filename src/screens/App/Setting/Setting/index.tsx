@@ -5,9 +5,12 @@ import {useSelector} from 'react-redux';
 import TranslateText from '@src/hooks/useTranslate';
 import LinearGradient from 'react-native-linear-gradient';
 import {AppColor, appImages, appSVG, Routes} from '@src/shared/exporter';
+import {useTranslateTextMutation} from '@src/redux/TranslationApi/translationApi';
+import {AppLoader} from '@src/components/primitive/AppLoader';
 
 const Setting = ({navigation}: any) => {
   const {selectedLanguage} = useSelector((state: any) => state.app);
+  const [translateText, {isLoading}] = useTranslateTextMutation();
 
   return (
     <View style={styles.container}>
@@ -25,10 +28,12 @@ const Setting = ({navigation}: any) => {
           />
         </View>
         <View style={styles.bodyContainer}>
-          <View style={[styles.listitem, {}]}>
+          <View style={styles.listitem}>
             <View style={[styles.textContainer]}>
               {appSVG.LanguageSharp}
-              <TranslateText style={[styles.profileTextStyle]}>
+              <TranslateText
+                translateText={translateText}
+                style={[styles.profileTextStyle]}>
                 Language
               </TranslateText>
             </View>
@@ -43,6 +48,7 @@ const Setting = ({navigation}: any) => {
           </View>
         </View>
       </View>
+      {isLoading && <AppLoader />}
     </View>
   );
 };

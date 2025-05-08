@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {AppColor, WP, appSVG} from '@shared/exporter';
-import {useSelector} from 'react-redux';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const {width} = Dimensions.get('window');
 
@@ -85,8 +85,9 @@ export const BottomTab: React.FC<BottomTabProps> = ({
   descriptors,
   navigation,
 }) => {
+  const insets = useSafeAreaInsets();
   return (
-    <View style={styles.tabsContainer}>
+    <View style={[styles.tabsContainer, {paddingBottom: insets.bottom}]}>
       <FlatList
         numColumns={4}
         data={state?.routes}
@@ -109,7 +110,7 @@ export const BottomTab: React.FC<BottomTabProps> = ({
 
 const styles = StyleSheet.create({
   tabsContainer: {
-    height: WP('20'),
+    // height: WP('20'),
     borderTopWidth: 1,
     paddingTop: WP('1'),
     paddingHorizontal: WP('3'),

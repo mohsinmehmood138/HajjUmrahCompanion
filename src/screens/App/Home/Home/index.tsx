@@ -13,10 +13,11 @@ import styles from './styles';
 import TranslateText from '@src/hooks/useTranslate';
 import {appImages, appSVG} from '@src/shared/assets';
 import NetInfo from '@react-native-community/netinfo';
-import {Routes, UMRAH_DATA} from '@src/shared/exporter';
+import WifiModal from '@src/components/primitive/WifiModal';
+import {Routes, UMRAH_DATA, WP} from '@src/shared/exporter';
 import {AppLoader} from '@src/components/primitive/AppLoader';
 import {setTranslationLoading, setFirstTime} from '@src/redux/app/appSlice';
-import WifiModal from '@src/components/primitive/WifiModal';
+import {useTranslateTextMutation} from '@src/redux/TranslationApi/translationApi';
 
 const Home = ({navigation}: any) => {
   const dispatch = useDispatch();
@@ -24,16 +25,12 @@ const Home = ({navigation}: any) => {
   const {translationLoading, isRTL, isFirstTime} = useSelector(
     (state: any) => state.app,
   );
-
-  console.log(isRTL, 'isRTL', translationLoading);
+  const [translateText, {isLoading}] = useTranslateTextMutation();
 
   useEffect(() => {
     if (isFirstTime) {
       const checkInternet = () => {
         NetInfo.fetch().then(state => {
-          console.log('Connection type:', state.type);
-          console.log('Is connected?', state.isConnected);
-
           if (!state.isConnected) {
             setModalVisible(true);
           } else {
@@ -82,15 +79,25 @@ const Home = ({navigation}: any) => {
             ]}>
             <View>
               <TranslateText
+                translateText={translateText}
                 style={[
                   styles.cardTextStyle,
                   {
                     alignSelf: isRTL ? 'flex-end' : 'flex-start',
+                    width: !isRTL && WP('75'),
                   },
                 ]}>
                 {item?.heading}
               </TranslateText>
-              <TranslateText style={[styles.desTextStyle]}>
+              <TranslateText
+                translateText={translateText}
+                style={[
+                  styles.desTextStyle,
+                  {
+                    textAlign: isRTL ? 'right' : 'left',
+                    width: WP('75'),
+                  },
+                ]}>
                 {item?.subheading}
               </TranslateText>
             </View>
@@ -116,6 +123,7 @@ const Home = ({navigation}: any) => {
         <Image source={appImages.home} style={styles.imageStyle} />
         <View style={styles.bodyContainer}>
           <TranslateText
+            translateText={translateText}
             style={[
               styles.homeTextStyle,
               {
@@ -133,6 +141,7 @@ const Home = ({navigation}: any) => {
           />
         </View>
       </View>
+
       <WifiModal isVisible={isModalVisible}>
         <View style={styles.modalContainer}>
           <Image source={appImages.wifiImage} style={styles.wifiImage} />
@@ -142,6 +151,7 @@ const Home = ({navigation}: any) => {
           </Text>
         </View>
       </WifiModal>
+      {isLoading && <AppLoader />}
     </ScrollView>
   );
 };

@@ -13,7 +13,6 @@ const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
   whitelist: ['app'],
-  blacklist: [translationApi.reducerPath],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
